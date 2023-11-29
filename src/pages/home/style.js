@@ -47,21 +47,21 @@ export const FilterOption = styled.option`
 
 `
 
-export const FormSubmit = styled.input`
-    background-color: var(--base-red);
-    font-size: 16px;
-    margin: 0.2rem;
-    padding: 0.4rem 1rem;
-    border-style: none;
-    border-radius: 4px;
-    color: var(--white-1);
-    cursor: pointer;
+// export const FormSubmit = styled.input`
+//     background-color: var(--base-red);
+//     font-size: 16px;
+//     margin: 0.2rem;
+//     padding: 0.4rem 1rem;
+//     border-style: none;
+//     border-radius: 4px;
+//     color: var(--white-1);
+//     cursor: pointer;
 
-    &:hover {
-        background-color: var(--base-black);
-        border: 1px solid var(--base-red);
-    }
-`
+//     &:hover {
+//         background-color: var(--base-black);
+//         border: 1px solid var(--base-red);
+//     }
+// `
 
 export const ListDiv = styled.div`
     display: flex;

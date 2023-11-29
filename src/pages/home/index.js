@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 import { useEffect, useState } from "react";
 import { filterControls, orderControls } from "./control";
-import { FiltersDiv, FilterDiv, SearchBar, SearchForm, Title, TitleDiv, FilterLabel, FilterSelect, FilterOption, FormSubmit, ListDiv, ListItem, ItemPhoto, ItemLink, ItemInfo } from "./style";
+import { FiltersDiv, FilterDiv, SearchBar, SearchForm, Title, TitleDiv, FilterLabel, FilterSelect, FilterOption, ListDiv, ListItem, ItemPhoto, ItemLink, ItemInfo } from "./style";
 
 const Home = () => {
     const [result, setResult] = useState([]);
