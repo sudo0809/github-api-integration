@@ -20,13 +20,15 @@ export const ContentDiv = styled.div`
 
 export const ContentLeftSide = styled.div`
     max-width: 400px;
-    padding-left: 6rem;
+    padding: 0 2rem 0 6rem;
     border-right: 1px solid var(--base-red);
+    text-align: center;
 `
 
 export const ProfilePic = styled.img`
     width: 14rem;
     border-radius: 50%;
+    margin-bottom: 2rem;
 `
 
 export const ContentRightSide = styled.div`

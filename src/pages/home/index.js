@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { filterControls, orderControls } from "./control";
 import { FiltersDiv, FilterDiv, SearchBar, SearchForm, Title, TitleDiv, FilterLabel, FilterSelect, FilterOption, FormSubmit, ListDiv, ListItem, ItemPhoto, ItemLink, ItemInfo } from "./style";
 
@@ -9,13 +9,10 @@ const Home = () => {
     const [sortBy, setSortBy] = useState('follower');
     const [orderBy, setOrderBy] = useState('desc');
 
-    const octokit = new Octokit({
-        auth: process.env.GITHUB_TOKEN,
-        baseUrl: 'https://api.github.com'
-    });
-
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        const octokit = new Octokit({
+            auth: process.env.GITHUB_TOKEN
+        });
 
         octokit.request("GET /search/users?q={search}", {
             search: searchUser,
@@ -23,18 +20,19 @@ const Home = () => {
             direction: orderBy
         }).then((res) => {
             setResult(res.data)
-            console.log(res.data)
         }).catch(err => {
             console.log(err);
         });
-    }
+    
+    }, [searchUser, sortBy, orderBy])
+    
 
     return (
         <>
             <TitleDiv>
                 <Title>Find Github User's</Title>
             </TitleDiv>
-            <SearchForm onSubmit={handleOnSubmit}>
+            <SearchForm>
                 <SearchBar
                     type="text"
                     placeholder='Search User'
@@ -63,7 +61,6 @@ const Home = () => {
                         </FilterSelect>
                     </FilterDiv>
                 </FiltersDiv>
-                <FormSubmit type="submit" value="Submit" />
             </SearchForm>
             <ListDiv>
                 {

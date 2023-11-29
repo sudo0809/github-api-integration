@@ -20,7 +20,6 @@ const User = () => {
             username: username
         }).then((res) => {
             setUser(res.data)
-            console.log(res.data)
         }).catch(err => {
             console.log(err);
         });
@@ -42,7 +41,6 @@ const User = () => {
             return res.data.sort(compareOnDate);
         }).then((res) => {
             setRepos(res)
-            console.log(res)
         }).catch(err => {
             console.log(err);
         });
@@ -51,7 +49,7 @@ const User = () => {
     return (
         <>
             <TitleDiv>
-                <Title> {username}</Title>
+                <Title>{user?.name} - {username}</Title>
             </TitleDiv>
             {
                 user ?
@@ -66,7 +64,7 @@ const User = () => {
                                 (
                                     <RepoGrid>
                                         {repos.map((repo) => (
-                                            <GridItem>
+                                            <GridItem key={repo.id}>
                                                 <ItemTitleLink to={repo.clone_url} target="_blank">
                                                     <h3>{repo.name}</h3>
                                                 </ItemTitleLink>
