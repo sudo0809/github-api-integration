@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { filterControls, orderControls } from "./control";
 import { FiltersDiv, FilterDiv, SearchBar, SearchForm, Title, TitleDiv, FilterLabel, FilterSelect, FilterOption, ListDiv, ListItem, ItemPhoto, ItemLink, ItemInfo } from "./style";
 
@@ -9,7 +9,18 @@ const Home = () => {
     const [sortBy, setSortBy] = useState('follower');
     const [orderBy, setOrderBy] = useState('desc');
 
-    useEffect(() => {
+    const debounce = (handleFn) => {
+        let timer;
+        return function (...args) {
+            let context = this;
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                handleFn.apply(context, args);
+            }, 500)
+        }
+    };
+
+    const handleChangeOnSearch = (e) => {
         const octokit = new Octokit({
             auth: process.env.GITHUB_TOKEN
         });
@@ -23,9 +34,9 @@ const Home = () => {
         }).catch(err => {
             console.log(err);
         });
-    
-    }, [searchUser, sortBy, orderBy])
-    
+    }
+
+    const optimizedHandleSearch = debounce(handleChangeOnSearch)
 
     return (
         <>
@@ -36,8 +47,11 @@ const Home = () => {
                 <SearchBar
                     type="text"
                     placeholder='Search User'
-                    value={searchUser}
-                    onChange={(e) => setSearchUser(e.target.value)}
+                    // value={searchUser}
+                    onChange={(e) => {
+                        setSearchUser(e.target.value)
+                        optimizedHandleSearch(searchUser);
+                    }}
                 />
                 <FiltersDiv>
                     <FilterDiv>
@@ -45,7 +59,7 @@ const Home = () => {
                         <FilterSelect name="sort" id="sort-select" onChange={(e) => setSortBy(e.target.value)}>
                             {
                                 filterControls.map((control) => (
-                                    <FilterOption  key={control.id} value={control.value}>{control.content}</FilterOption>
+                                    <FilterOption key={control.id} value={control.value}>{control.content}</FilterOption>
                                 ))
                             }
                         </FilterSelect>
